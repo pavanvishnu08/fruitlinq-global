@@ -106,7 +106,8 @@ export default function App() {
       {/* Hero Section */}
       <Section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-<img src="/Cup Splash Background.png" alt="Fresh Oranges" className="w-full h-full object-cover" />
+<img src="/Gemini_Generated_Image_4z37hg4z37hg4z37.png" alt="Fresh Oranges" className="w-full h-full object-cover" />
+
 
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#FF8C00]/30" />
           <FloatingShape className="w-32 h-32 bg-[#FF8C00] top-1/4 left-1/4" delay={0} />
