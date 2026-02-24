@@ -149,7 +149,8 @@ As a South African company, we eliminate wholesale dependency to deliver uncompr
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative">
               <div className="relative rounded-3xl overflow-hidden aspect-[4/5] max-h-[500px] shadow-2xl">
-                <img src="home2.jpeg" alt="Fresh Juice Pouring" className="w-full h-full object-cover" />
+                <img src="/Premium Orange Box.png" alt="Premium Orange Box" className="w-full h-full object-cover" />
+
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                 <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.5 }} className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-xl shadow-xl rounded-2xl p-4 sm:p-6">
                   <div className="grid grid-cols-2 gap-4">
@@ -184,7 +185,7 @@ As a South African company, we eliminate wholesale dependency to deliver uncompr
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-[#FF8C00]/10 to-[#2ECC71]/10 rounded-3xl blur-3xl" />
-              <div className="relative"><img src="juicer.jpeg" alt="5th Gen Smart Juicer" className="w-full rounded-3xl shadow-2xl" /></div>
+              <div className="relative"><img src="Fruitful1.png" alt="5th Gen Smart Juicer" className="w-full rounded-3xl shadow-2xl" /></div>
             </motion.div>
             <div className="grid grid-cols-2 gap-4 sm:gap-6">
               {[{ icon: Droplets, title: "Cold Chain", desc: "Temp controlled", color: "bg-blue-50" }, { icon: Smartphone, title: "Payments", desc: "QR, Apple pay, Card payments", color: "bg-purple-50" }, { icon: Zap, title: "Automatic", desc: "Touchless", color: "bg-green-50" }, { icon: Leaf, title: "100% Fresh", desc: "No additives", color: "bg-orange-50" }, { icon: ShieldCheck, title: "IoT Enabled", desc: "Remote monitor", color: "bg-cyan-50" }, { icon: Clock, title: "55 Seconds", desc: "Fast service", color: "bg-red-50" }].map((feature, idx) => (
