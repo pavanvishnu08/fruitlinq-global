@@ -40,6 +40,12 @@ const FloatingShape = ({ className = "", delay = 0 }: { className?: string; dela
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    location: '',
+    interest: 'Franchise Opportunity'
+  });
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
 
@@ -48,6 +54,19 @@ export default function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleWhatsAppSubmit = () => {
+    const message = `Hello Fruitful Global,\n\nI am interested in: ${formData.interest}\n\nMy Details:\nName: ${formData.name}\nPhone: ${formData.phone}\nLocation: ${formData.location}\n\nPlease contact me.`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/27718833045?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
 
   return (
     <div className="font-sans text-[#1a1a1a] bg-white overflow-x-hidden">
@@ -374,16 +393,15 @@ As a South African company, we eliminate wholesale dependency to deliver uncompr
 
             <div className="bg-[#FFF7E6] border border-orange-100 rounded-3xl p-6 sm:p-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
-              <form className="space-y-4">
-                <div><input type="text" placeholder="Your Name" className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" /></div>
-                <div><input type="tel" placeholder="Your Mobile Number" className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" /></div>
-
-                <div><input type="text" placeholder="Where do you want to start?" className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" /></div>
-                <div><select className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all"><option className="text-black">Franchise Opportunity</option><option className="text-black">Location Partnership</option><option className="text-black">Customer Support</option></select></div>
-                <a href="https://wa.me/27718833045" target="_blank" rel="noopener noreferrer" className="w-full block text-center bg-gradient-to-r from-[#FF8C00] to-[#FF6B00] text-white font-bold py-4 rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all shadow-lg">Send Message on WhatsApp</a>
-
+              <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); handleWhatsAppSubmit(); }}>
+                <div><input type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="Your Name" className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" /></div>
+                <div><input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Your Mobile Number" className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" /></div>
+                <div><input type="text" name="location" value={formData.location} onChange={handleInputChange} placeholder="Where do you want to start?" className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" /></div>
+                <div><select name="interest" value={formData.interest} onChange={handleInputChange} className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all"><option className="text-black">Franchise Opportunity</option><option className="text-black">Location Partnership</option><option className="text-black">Customer Support</option></select></div>
+                <button type="submit" className="w-full bg-gradient-to-r from-[#FF8C00] to-[#FF6B00] text-white font-bold py-4 rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all shadow-lg">Request Call Back</button>
               </form>
             </div>
+
           </div>
         </div>
       </Section>
