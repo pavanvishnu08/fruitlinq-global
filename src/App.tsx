@@ -376,10 +376,12 @@ As a South African company, we eliminate wholesale dependency to deliver uncompr
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
               <form className="space-y-4">
                 <div><input type="text" placeholder="Your Name" className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" /></div>
-                <div><input type="tel" placeholder="10-digit mobile number" className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" /></div>
+                <div><input type="tel" placeholder="Your Mobile Number" className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" /></div>
+
                 <div><input type="text" placeholder="Where do you want to start?" className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" /></div>
                 <div><select className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all"><option className="text-black">Franchise Opportunity</option><option className="text-black">Location Partnership</option><option className="text-black">Customer Support</option></select></div>
-                <button type="button" className="w-full bg-gradient-to-r from-[#FF8C00] to-[#FF6B00] text-white font-bold py-4 rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all shadow-lg">Request Call Back</button>
+                <a href="https://wa.me/27718833045" target="_blank" rel="noopener noreferrer" className="w-full block text-center bg-gradient-to-r from-[#FF8C00] to-[#FF6B00] text-white font-bold py-4 rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all shadow-lg">Send Message on WhatsApp</a>
+
               </form>
             </div>
           </div>
@@ -393,7 +395,7 @@ As a South African company, we eliminate wholesale dependency to deliver uncompr
             <div className="md:col-span-2">
               <img src="/logo1.png" alt="Fruitlinq Logo" className="h-20 sm:h-24 md:h-28 w-auto mb-6" />
 
-              <p className="text-gray-400 max-w-sm">India's first farm-controlled orange juice vending franchise. Freshly squeezed in 55 seconds.</p>
+              <p className="text-gray-400 max-w-sm">South africa first farm-controlled orange juice vending franchise. Freshly squeezed in 55 seconds.</p>
             </div>
             <div>
               <h4 className="font-bold text-lg mb-4">Connect</h4>
