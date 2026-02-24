@@ -171,44 +171,8 @@ As a South African company, we eliminate wholesale dependency to deliver uncompr
         </div>
       </Section>
 
-      {/* Fresh Fruits E-Commerce */}
-
-      <Section className="py-20 sm:py-32 bg-[#FFF7E6] relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-            <span className="text-[#2ECC71] font-bold uppercase tracking-widest text-sm mb-4 block">Fresh Juice Through vending machine</span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-900">Premium Quality Fruits <span className="text-[#FF8C00]">Delivered Fresh</span></h2>
-            <p className="text-gray-500 text-lg max-w-3xl mx-auto">Buy fresh, high-quality juice online through the vending machine. We source fruits directly from trusted farmers and maintain freshness through strict quality checks, professional packaging, and efficient juice.</p>
-          </motion.div>
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
-              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] shadow-2xl">
-                <img src="/South African Orange Farm.png" alt="South African Orange Farm" className="w-full h-full object-cover" />
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-                  <div className="w-2 h-2 rounded-full bg-[#FF8C00]" />
-                  <div className="w-2 h-2 rounded-full bg-gray-300" />
-                  <div className="w-2 h-2 rounded-full bg-gray-300" />
-                </div>
-              </div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-6">
-              {[{ icon: Leaf, title: "Direct Farm Sourcing", desc: "We establish direct partnerships with trusted growers in South Africa and Egypt, ensuring full traceability, consistent supply, and uncompromising quality from farm to market.", detail: "By eliminating middlemen, we ensure farmers get fair prices while customers receive the freshest produce within 24-48 hours of harvest.", color: "bg-green-50" }, { icon: ShoppingBag, title: "Professional Grade Packaging", desc: "Expert packaging with temperature-controlled materials ensures perfect condition.", detail: "Each fruit is individually inspected, cleaned, and packed in eco-friendly materials that maintain optimal freshness during transit.", color: "bg-orange-50" }, { icon: Truck, title: "Fast & Efficient", desc: "straight from farm to your hand.", detail: "Our cold chain logistics network ensures fruits arrive at peak ripeness, retaining maximum nutrition and flavor.", color: "bg-blue-50" }].map((item, idx) => (
-                <motion.div key={idx} initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.2 }} className={`flex gap-4 p-5 ${item.color} rounded-2xl shadow-sm`}>
-                  <div className="w-14 h-14 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0"><item.icon size={28} className="text-gray-700" /></div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-gray-900 mb-1">{item.title}</h3>
-                    <p className="text-gray-700 text-sm font-medium mb-1">{item.desc}</p>
-                    <p className="text-gray-500 text-xs leading-relaxed">{item.detail}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </Section>
-
-
       {/* Smart Juicer */}
+
       <Section className="py-20 sm:py-32 bg-white relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#FF8C00]/20 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
