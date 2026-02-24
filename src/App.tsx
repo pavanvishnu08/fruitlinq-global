@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { 
   Menu, 
   X, 
-  ChevronRight, 
   Droplets, 
   Zap, 
   ShieldCheck, 
@@ -20,24 +19,9 @@ import {
   Wrench,
   Truck,
   Users,
-  MessageCircle
+  Play
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
-
-// --- Colors & Theme Configuration ---
-// Primary Orange: #FF8C00
-// Secondary Green: #2ECC71
-// Background: #FFF7E6
-// Text Dark: #333333
-// Vibrant Purple: #9D4EDD
-
-const COLORS = {
-  primary: '#FF8C00',
-  secondary: '#2ECC71',
-  background: '#FFF7E6',
-  text: '#333333',
-  purple: '#9D4EDD',
-};
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 
 const Section = ({ children, className = "", id = "", style = {} }: { children: React.ReactNode; className?: string; id?: string; style?: React.CSSProperties }) => (
   <section id={id} className={`w-full ${className}`} style={style}>
@@ -45,315 +29,204 @@ const Section = ({ children, className = "", id = "", style = {} }: { children: 
   </section>
 );
 
-const Button = ({ children, variant = 'primary', className = "" }: { children: React.ReactNode; variant?: 'primary' | 'outline' | 'white' | 'secondary'; className?: string }) => {
-  const baseStyle = "px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg";
-  const variants = {
-    primary: `bg-[#FF8C00] text-white hover:bg-orange-600`,
-    secondary: `bg-[#2ECC71] text-white hover:bg-green-600`,
-    outline: `border-2 border-white text-white hover:bg-white hover:text-[#FF8C00]`,
-    white: `bg-white text-[#FF8C00] hover:bg-gray-100`,
-  };
-  
-  return (
-    <button className={`${baseStyle} ${variants[variant]} ${className}`}>
-      {children}
-    </button>
-  );
-};
+const FloatingShape = ({ className = "", delay = 0 }: { className?: string; delay?: number }) => (
+  <motion.div
+    animate={{ y: [0, -20, 0], rotate: [0, 5, -5, 0] }}
+    transition={{ duration: 6, repeat: Infinity, delay, ease: "easeInOut" }}
+    className={`absolute rounded-full opacity-20 ${className}`}
+  />
+);
 
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const heroY = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-  ];
-
   return (
-    <div className="font-sans text-[#333333] bg-[#FFF7E6] overflow-x-hidden">
-      
-      {/* --- Navigation --- */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md' : 'bg-transparent'}`}>
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <img 
-              src="/logo1.png" 
-              alt="Fruitlinq Logo" 
-              className="h-30 w-auto"
-            />
+    <div className="font-sans text-[#1a1a1a] bg-white overflow-x-hidden">
+      <style>{`
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f5f5f5; }
+        ::-webkit-scrollbar-thumb { background: #FF8C00; border-radius: 4px; }
+        html { scroll-behavior: smooth; }
+      `}</style>
+
+      <motion.div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FF8C00] to-[#2ECC71] z-[100]" style={{ scaleX: scrollYProgress, transformOrigin: "0%" }} />
+
+      {/* Navigation - Simplified without nav links and CTA */}
+      <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-100' : 'bg-transparent'}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16 sm:h-20">
+            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex items-center">
+              <img src="/logo1.png" alt="Fruitlinq Logo" className="h-20 sm:h-24 md:h-32 w-auto" />
+
+            </motion.div>
+            <button className="md:hidden text-gray-700 p-2" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+              {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
           </div>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a 
-                key={link.name} 
-                href={link.href} 
-                className={`text-sm font-medium tracking-wide hover:text-[#FF8C00] transition-colors ${isScrolled ? 'text-[#333333]' : 'text-white/90'}`}
-              >
-                {link.name}
-              </a>
-            ))}
-
-          </div>
-
-          {/* Mobile Menu Toggle */}
-          <button 
-            className="md:hidden text-[#FF8C00]"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} color={isScrolled ? '#FF8C00' : 'white'} />}
-          </button>
         </div>
-
-        {/* Mobile Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
-            <motion.div 
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 flex flex-col p-6 gap-4 md:hidden"
-            >
-              {navLinks.map((link) => (
-                <a 
-                  key={link.name} 
-                  href={link.href} 
-                  className="text-lg font-medium text-[#333333] py-2 border-b border-gray-100"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </a>
-              ))}
-              <button className="w-full py-3 bg-[#FF8C00] text-white rounded-lg font-bold mt-2">
-                Partner With Us
-              </button>
+            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="md:hidden bg-white/95 backdrop-blur-xl shadow-lg border-t border-gray-100">
+              <div className="px-4 py-6">
+                <p className="text-lg font-medium text-gray-700 py-2">Menu</p>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
       </nav>
 
-      {/* --- 1. Hero Section --- */}
-      <Section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
+      {/* Hero Section */}
+      <Section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="/homeban.jpeg" 
-            alt="Fresh Oranges" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#FF8C00]/30" />
+          <img src="/homeban.jpeg" alt="Fresh Oranges" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#FF8C00]/30" />
+          <FloatingShape className="w-32 h-32 bg-[#FF8C00] top-1/4 left-1/4" delay={0} />
+          <FloatingShape className="w-20 h-20 bg-[#2ECC71] bottom-1/3 right-1/4" delay={1} />
+          <FloatingShape className="w-16 h-16 bg-white top-1/2 right-1/3" delay={2} />
         </div>
-
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center text-white">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl font-bold mb-6 leading-tight tracking-tight"
-          >
+        <motion.div style={{ y: heroY }} className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center">
+          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }} className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 sm:mb-6 leading-tight text-white">
             Farm to Cup in <br />
             <span className="text-[#FF8C00]">55 Seconds</span>
           </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl md:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto font-light"
-          >
-            Premium oranges from South Africa & Egypt. <br className="hidden md:block" />
-            Freshly squeezed in front of you.
+          <motion.p initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="text-base sm:text-lg md:text-xl text-gray-200 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed">
+            Premium export-grade oranges sourced directly from our own orchards in South Africa & Egypt. No wholesale dependency. No compromise on quality.
           </motion.p>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-6 md:gap-12 mb-10 text-lg font-semibold"
-          >
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#FF8C00]"></div>
-              <span>No water</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#FF8C00]"></div>
-              <span>No sugar</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#FF8C00]"></div>
-              <span>No ice</span>
-            </div>
-          </motion.div>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <Button variant="primary">Explore Franchise</Button>
-            <Button variant="outline">Request Call Back</Button>
-          </motion.div>
-        </div>
-      </Section>
-
-      {/* --- 1.5. About Information Section --- */}
-      <Section className="py-24 bg-[#FFF7E6]">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/5] md:aspect-square"
-          >
-            <img 
-              src="home2.jpeg" 
-              alt="Fresh Juice Pouring" 
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-8">
-              <p className="text-white font-medium text-lg">100% Pure Nature</p>
-            </div>
-          </motion.div>
-          
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-12 h-1 bg-[#FF8C00]"></div>
-              <span className="text-[#2ECC71] font-bold uppercase tracking-wider text-sm">Our Story</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#333333]">Redefining Freshness in India</h2>
-            <p className="text-gray-600 text-lg leading-relaxed mb-6">
-              Fruitlinq brings the orchard to the city. We source the finest locally grown oranges and deliver them through our state-of-the-art smart juicers.
-            </p>
-            <p className="text-gray-600 text-lg leading-relaxed mb-8">
-              No preservatives, no added sugar, and absolutely no waiting. Just pure, vitamin-rich juice squeezed right before your eyes in under a minute. It's not just juice; it's a lifestyle of health and convenience.
-            </p>
-            
-            <div className="grid grid-cols-2 gap-6">
-              <div className="flex flex-col">
-                <span className="text-4xl font-bold text-[#FF8C00]">55s</span>
-                <span className="text-gray-500">Juicing Time</span>
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 sm:mb-12">
+            {[{ icon: Droplets, label: "No Ice" }, { icon: ShieldCheck, label: "No Water" }, { icon: Zap, label: "No Sugar" }].map((item, idx) => (
+              <div key={idx} className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full">
+                <item.icon size={16} className="text-white" />
+                <span className="font-medium text-white text-xs sm:text-sm">{item.label}</span>
               </div>
-              <div className="flex flex-col">
-                <span className="text-4xl font-bold text-[#FF8C00]">100%</span>
-                <span className="text-gray-500">Natural</span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </Section>
-
-      {/* --- 1.6. Corporate Backing Section --- */}
-      <Section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="bg-[#FFF7E6] rounded-3xl p-8 md:p-12 border border-orange-100 shadow-sm flex flex-col md:flex-row items-center gap-8 md:gap-12"
-          >
-            <div className="md:w-1/3 flex justify-center">
-              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-md text-[#2ECC71]">
-                <Building2 size={48} />
-              </div>
-            </div>
-            <div className="md:w-2/3 text-center md:text-left">
-              <h3 className="text-2xl font-bold text-[#333333] mb-4">Corporate Backing</h3>
-              <p className="text-gray-600 text-lg leading-relaxed">
-                Fruitlinq operates as a wholly owned subsidiary of <span className="font-semibold text-[#FF8C00]">Hortgro Fresh Private Limited</span>, a globally established fresh produce company with operations across multiple countries and a strong track record in international fruit exports.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </Section>
-
-      {/* --- 2. Business Snapshot Section --- */}
-      <Section id="about" className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#333333] mb-4">Business Snapshot</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">Why partner with Fruitlinq? The numbers speak for themselves.</p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { icon: Building2, label: "25+ yrs exp.", sub: "Strong Background", color: "text-[#4FC3F7]", bg: "bg-blue-50" },
-              { icon: CheckCircle2, label: "High", sub: "Gross Margins", color: "text-[#2ECC71]", bg: "bg-green-50" },
-              { icon: ShoppingBag, label: "Stable", sub: "Supply Cost", color: "text-[#FF8C00]", bg: "bg-orange-50" },
-              { icon: Clock, label: "24/7", sub: "Automated Sales", color: "text-[#9D4EDD]", bg: "bg-purple-50" },
-            ].map((item, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="text-center group"
-              >
-                <div className={`w-20 h-20 mx-auto ${item.bg} rounded-full flex items-center justify-center mb-4 ${item.color} transition-transform group-hover:scale-110`}>
-                  <item.icon size={32} />
-                </div>
-                <div className="font-bold text-2xl text-[#333333] mb-1">{item.label}</div>
-                <div className="text-gray-500 font-medium">{item.sub}</div>
-              </motion.div>
             ))}
+          </motion.div>
+          
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }}>
+            <a href="#about" className="inline-flex items-center gap-2 px-8 py-4 bg-[#2ECC71] text-white font-semibold rounded-full hover:bg-[#27ae60] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+              Explore More
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+          </motion.div>
+        </motion.div>
+      </Section>
+
+      {/* About Section */}
+      <Section id="about" className="py-20 sm:py-32 bg-white relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative">
+              <div className="relative rounded-3xl overflow-hidden aspect-[4/5] max-h-[500px] shadow-2xl">
+                <img src="home2.jpeg" alt="Fresh Juice Pouring" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.5 }} className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-xl shadow-xl rounded-2xl p-4 sm:p-6">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="text-center"><div className="text-2xl sm:text-4xl font-bold text-[#FF8C00]">55s</div><div className="text-xs sm:text-sm text-gray-500">Juicing Time</div></div>
+                    <div className="text-center"><div className="text-2xl sm:text-4xl font-bold text-[#2ECC71]">100%</div><div className="text-xs sm:text-sm text-gray-500">Natural</div></div>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-1 bg-[#FF8C00]" />
+                <span className="text-[#2ECC71] font-bold uppercase tracking-widest text-sm">Our Story</span>
+              </motion.div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900">India's Premier Fresh Grocery & <span className="text-[#FF8C00]">Food Technology</span> Company</h2>
+              <p className="text-gray-600 text-base sm:text-lg leading-relaxed mb-6">Fruitlinq is a fresh grocery and food technology company specializing in fresh fruit sourcing, online fruit delivery, and freshly squeezed orange juice vending machines. Built on decades of experience in global fruit supply chains, we combine quality, technology, and convenience to deliver reliable fresh food experiences.</p>
+              <p className="text-gray-600 text-base sm:text-lg leading-relaxed">By owning export operations and partnering directly with orchards in South Africa and Egypt, we ensure that every orange squeezed in our machines meets the highest global standards of sweetness and juice content.</p>
+            </motion.div>
           </div>
         </div>
       </Section>
 
-      {/* --- 3. 5th Gen Smart Juicer Section --- */}
-      <Section id="features" className="py-24 bg-[#FFF7E6]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#333333] mb-4">Meet the 5th Gen Smart Juicer</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">Precision engineering meets nature's bounty. The most advanced automated juicing technology in India.</p>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Machine Image Placeholder */}
-            <div className="relative mx-auto w-full max-w-md">
-              <div className="absolute inset-0 bg-[#2ECC71] rounded-full blur-[100px] opacity-20"></div>
-              <img 
-                src="juicer.jpeg" 
-                alt="5th Gen Smart Juicer" 
-                className="relative z-10 rounded-3xl shadow-2xl w-full object-cover h-[600px]"
-              />
+      {/* Corporate Backing */}
+      <Section className="py-16 sm:py-24 bg-[#FFF7E6]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-white rounded-3xl p-8 sm:p-12 shadow-xl">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="flex items-center gap-6">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-[#FF8C00] to-[#FF6B00] rounded-2xl flex items-center justify-center shadow-lg shadow-orange-200">
+                  <Building2 size={36} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Corporate Backing</h3>
+                  <p className="text-gray-500 text-sm sm:text-base">Wholly owned subsidiary</p>
+                </div>
+              </div>
+              <div>
+                <p className="text-gray-600 text-base sm:text-lg leading-relaxed">Fruitlinq operates as a wholly owned subsidiary of <span className="text-[#FF8C00] font-semibold">Hortgro Fresh Private Limited</span>, a globally established fresh produce company with operations across multiple countries.</p>
+              </div>
             </div>
+          </motion.div>
+        </div>
+      </Section>
 
-            <div className="grid sm:grid-cols-2 gap-6">
-              {[
-                { icon: Droplets, title: "Cold Chain", desc: "Temp controlled environment for maximum freshness.", color: "text-[#4FC3F7]", bg: "bg-blue-50" },
-                { icon: Smartphone, title: "UPI Enabled", desc: "Scan & Pay instantly with any UPI app.", color: "text-[#FFE066]", bg: "bg-yellow-50" },
-                { icon: Zap, title: "Fully Automatic", desc: "100% Touchless operation for hygiene.", color: "text-[#2ECC71]", bg: "bg-green-50" },
-                { icon: Leaf, title: "100% Fresh Juice", desc: "No additives, no preservatives, just fruit.", color: "text-[#FF8C00]", bg: "bg-orange-50" },
-                { icon: ShieldCheck, title: "IoT Enabled", desc: "Real-time stats and remote monitoring.", color: "text-[#9D4EDD]", bg: "bg-purple-50" },
-                { icon: Clock, title: "55 Second Service", desc: "From order to full cup in under a minute.", color: "text-[#FF6B6B]", bg: "bg-red-50" },
-              ].map((feature, idx) => (
-                <motion.div 
-                  key={idx}
-                  whileHover={{ y: -5 }}
-                  className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-all border border-gray-100"
-                >
-                  <div className={`w-12 h-12 ${feature.bg} rounded-xl flex items-center justify-center mb-4 ${feature.color}`}>
-                    <feature.icon size={24} />
+      {/* Fresh Fruits E-Commerce */}
+      <Section className="py-20 sm:py-32 bg-[#FFF7E6] relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+            <span className="text-[#2ECC71] font-bold uppercase tracking-widest text-sm mb-4 block">Fresh Juice Through vending machine</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-900">Premium Quality Fruits <span className="text-[#FF8C00]">Delivered Fresh</span></h2>
+            <p className="text-gray-500 text-lg max-w-3xl mx-auto">Buy fresh, high-quality juice online through the vending machine. We source fruits directly from trusted farmers and maintain freshness through strict quality checks, professional packaging, and efficient juice.</p>
+          </motion.div>
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
+              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] shadow-2xl">
+                <img src="/South African Orange Farm.png" alt="South African Orange Farm" className="w-full h-full object-cover" />
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+                  <div className="w-2 h-2 rounded-full bg-[#FF8C00]" />
+                  <div className="w-2 h-2 rounded-full bg-gray-300" />
+                  <div className="w-2 h-2 rounded-full bg-gray-300" />
+                </div>
+              </div>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-6">
+              {[{ icon: Leaf, title: "Direct Farm Sourcing", desc: "We partner directly with trusted farmers and own orchards in South Africa & Egypt.", detail: "By eliminating middlemen, we ensure farmers get fair prices while customers receive the freshest produce within 24-48 hours of harvest.", color: "bg-green-50" }, { icon: ShoppingBag, title: "Professional Grade Packaging", desc: "Expert packaging with temperature-controlled materials ensures perfect condition.", detail: "Each fruit is individually inspected, cleaned, and packed in eco-friendly materials that maintain optimal freshness during transit.", color: "bg-orange-50" }, { icon: Truck, title: "Fast & Efficient", desc: "straight from farm to your hand.", detail: "Our cold chain logistics network ensures fruits arrive at peak ripeness, retaining maximum nutrition and flavor.", color: "bg-blue-50" }].map((item, idx) => (
+                <motion.div key={idx} initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.2 }} className={`flex gap-4 p-5 ${item.color} rounded-2xl shadow-sm`}>
+                  <div className="w-14 h-14 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0"><item.icon size={28} className="text-gray-700" /></div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">{item.title}</h3>
+                    <p className="text-gray-700 text-sm font-medium mb-1">{item.desc}</p>
+                    <p className="text-gray-500 text-xs leading-relaxed">{item.detail}</p>
                   </div>
-                  <h3 className="font-bold text-lg mb-2 text-[#333333]">{feature.title}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">{feature.desc}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </Section>
+
+
+      {/* Smart Juicer */}
+      <Section className="py-20 sm:py-32 bg-white relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#FF8C00]/20 to-transparent" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-900">Meet the <span className="text-[#FF8C00]">5th Gen</span> Smart Juicer</h2>
+            <p className="text-gray-500 text-lg max-w-2xl mx-auto">Precision engineering meets nature's bounty. The most advanced automated juicing technology in India.</p>
+          </motion.div>
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#FF8C00]/10 to-[#2ECC71]/10 rounded-3xl blur-3xl" />
+              <div className="relative"><img src="juicer.jpeg" alt="5th Gen Smart Juicer" className="w-full rounded-3xl shadow-2xl" /></div>
+            </motion.div>
+            <div className="grid grid-cols-2 gap-4 sm:gap-6">
+              {[{ icon: Droplets, title: "Cold Chain", desc: "Temp controlled", color: "bg-blue-50" }, { icon: Smartphone, title: "UPI Enabled", desc: "Scan & Pay", color: "bg-purple-50" }, { icon: Zap, title: "Automatic", desc: "Touchless", color: "bg-green-50" }, { icon: Leaf, title: "100% Fresh", desc: "No additives", color: "bg-orange-50" }, { icon: ShieldCheck, title: "IoT Enabled", desc: "Remote monitor", color: "bg-cyan-50" }, { icon: Clock, title: "55 Seconds", desc: "Fast service", color: "bg-red-50" }].map((feature, idx) => (
+                <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} whileHover={{ y: -5 }} className={`${feature.color} border border-gray-100 rounded-2xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-all`}>
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white shadow-sm flex items-center justify-center mb-3"><feature.icon size={20} className="text-gray-700" /></div>
+                  <h3 className="font-bold text-gray-900 mb-1">{feature.title}</h3>
+                  <p className="text-gray-500 text-sm">{feature.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -361,123 +234,75 @@ export default function App() {
         </div>
       </Section>
 
-
-      {/* --- 5. Pure Immunity Section --- */}
-      <Section className="py-24 bg-[#FFF7E6]">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <span className="text-[#FF8C00] font-bold uppercase tracking-wider text-sm">Health Benefits</span>
-            <h2 className="text-4xl font-bold text-[#333333] mt-2">Pure Immunity in Every Cup</h2>
-            <p className="text-gray-600 mt-2 text-lg">More than just a drink, it's your daily dose of health.</p>
+      {/* Pure Immunity */}
+      <Section className="py-20 sm:py-32 bg-[#FFF7E6]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+            <span className="text-[#FF8C00] font-bold uppercase tracking-widest text-sm mb-4 block">Health Benefits</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-900">Pure Immunity in Every Cup</h2>
+            <p className="text-gray-500 text-lg">More than just a drink, it's your daily dose of health.</p>
           </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { 
-                title: "Vitamin C Powerhouse", 
-                desc: "One cup meets 80% of your daily Vitamin C requirement, boosting immunity instantly.",
-                icon: Zap,
-                color: "text-[#FF8C00]",
-                bg: "bg-orange-50"
-              },
-              { 
-                title: "100% Natural", 
-                desc: "Absolutely no added sugar, water, preservatives, or artificial colors. Just 3-4 whole oranges.",
-                icon: Leaf,
-                color: "text-[#2ECC71]",
-                bg: "bg-green-50"
-              },
-              { 
-                title: "Heart Healthy", 
-                desc: "Rich in antioxidants and hesperidin, known to improve heart health and lower blood pressure.",
-                icon: CheckCircle2, // Using CheckCircle2 as a generic health icon since Heart isn't imported
-                color: "text-[#FF6B6B]",
-                bg: "bg-red-50"
-              },
-            ].map((item, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.2 }}
-                whileHover={{ y: -10 }}
-                className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-all border border-gray-100 text-center"
-              >
-                <div className={`w-16 h-16 mx-auto ${item.bg} rounded-full flex items-center justify-center mb-6 ${item.color}`}>
-                  <item.icon size={32} />
-                </div>
-                <h3 className="text-xl font-bold mb-3 text-[#333333]">{item.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {[{ title: "Vitamin C Powerhouse", desc: "One cup meets 80% of your daily Vitamin C requirement.", detail: "Boosts immune system, promotes collagen production for healthy skin, and enhances iron absorption for better energy levels.", icon: Zap, color: "bg-orange-50" }, { title: "100% Natural", desc: "Absolutely no added sugar, water, or preservatives.", detail: "Pure orange juice squeezed fresh from export-grade oranges. No artificial additives, colors, or flavors—just nature's goodness.", icon: Leaf, color: "bg-green-50" }, { title: "Heart Healthy", desc: "Rich in antioxidants known to improve heart health.", detail: "Contains potassium to regulate blood pressure and flavonoids that reduce inflammation and support cardiovascular wellness.", icon: ShieldCheck, color: "bg-red-50" }].map((item, idx) => (
+              <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.2 }} whileHover={{ y: -10 }} className={`${item.color} border border-gray-100 rounded-2xl p-6 sm:p-8 text-center shadow-sm hover:shadow-md transition-all`}>
+                <div className={`w-14 h-14 mx-auto mb-4 rounded-2xl bg-white shadow-sm flex items-center justify-center`}><item.icon size={28} className="text-gray-700" /></div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-700 font-medium text-sm mb-2">{item.desc}</p>
+                <p className="text-gray-500 text-xs leading-relaxed">{item.detail}</p>
               </motion.div>
             ))}
+          </div>
+
+        </div>
+      </Section>
+
+      {/* Business Snapshot */}
+      <Section className="py-20 sm:py-32 bg-white relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-900">Why Partner with <span className="text-[#FF8C00]">Fruitlinq?</span></h2>
+            <p className="text-gray-500 text-lg max-w-2xl mx-auto">The numbers speak for themselves.</p>
+          </motion.div>
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div className="grid grid-cols-2 gap-6">
+              {[{ icon: Building2, label: "25+ yrs", sub: "Strong Background", desc: "Decades of expertise in global fruit supply chains and export operations", color: "bg-blue-50", iconColor: "text-blue-500" }, { icon: CheckCircle2, label: "High", sub: "Gross Margins", desc: "Premium pricing with direct farm sourcing eliminates middlemen costs", color: "bg-green-50", iconColor: "text-green-500" }, { icon: ShoppingBag, label: "Stable", sub: "Supply Cost", desc: "Own orchards in South Africa & Egypt ensure consistent fruit pricing year-round", color: "bg-orange-50", iconColor: "text-orange-500" }, { icon: Clock, label: "24/7", sub: "Automated Sales", desc: "Smart vending machines generate revenue round-the-clock without staff", color: "bg-purple-50", iconColor: "text-purple-500" }].map((item, idx) => (
+                <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} whileHover={{ scale: 1.05, shadow: "xl" }} className={`${item.color} border border-gray-100 rounded-2xl p-6 sm:p-8 text-center shadow-sm hover:shadow-md transition-all`}>
+                  <div className={`w-14 h-14 mx-auto mb-4 rounded-xl bg-white shadow-sm flex items-center justify-center ${item.iconColor}`}><item.icon size={28} /></div>
+                  <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{item.label}</div>
+                  <div className="text-gray-700 font-semibold text-sm mb-2">{item.sub}</div>
+                  <div className="text-gray-500 text-xs leading-relaxed">{item.desc}</div>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative">
+              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] lg:aspect-square shadow-2xl">
+                <img src="/Campus Scene v3.png" alt="Fruitlinq Business" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+              </div>
+            </motion.div>
           </div>
         </div>
       </Section>
 
-      {/* --- 5.5. The Complete Franchise Package --- */}
-      <Section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-[#333333]">The Complete Franchise Package</h2>
-            <p className="text-gray-600 mt-2 text-lg">We provide everything you need to succeed.</p>
-          </motion.div>
+      {/* Franchise Package */}
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { 
-                title: "Machine & Setup", 
-                items: ["5th-Gen Smart Juicer", "Professional Installation", "1 Year Warranty", "Complete Branding"],
-                color: "text-[#FF8C00]",
-                border: "border-[#FF8C00]",
-                icon: Wrench
-              },
-              { 
-                title: "Operations", 
-                items: ["Monthly Fruit Supply", "QC Protocols", "Predictive Maintenance", "Spare Parts Support"],
-                color: "text-[#2ECC71]",
-                border: "border-[#2ECC71]",
-                icon: Truck
-              },
-              { 
-                title: "Business Support", 
-                items: ["Location Assistance", "Staff Training", "Marketing Assets", "Dedicated Account Manager"],
-                color: "text-[#9D4EDD]",
-                border: "border-[#9D4EDD]",
-                icon: Users
-              }
-            ].map((pkg, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:border-gray-200 transition-colors"
-              >
-                <div className="flex items-center gap-3 mb-6">
-                  <div className={`p-3 rounded-xl bg-gray-50 ${pkg.color}`}>
-                    <pkg.icon size={28} />
-                  </div>
-                  <h3 className={`font-bold text-xl ${pkg.color} border-b-2 ${pkg.border} pb-1`}>{pkg.title}</h3>
-                </div>
-                <ul className="space-y-4">
-                  {pkg.items.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-[#2ECC71] shrink-0 mt-0.5" />
-                      <span className="text-gray-600 font-medium">{item}</span>
+      <Section className="py-20 sm:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+            <span className="text-[#FF8C00] font-bold uppercase tracking-widest text-sm mb-4 block">Everything Included</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-900">The Complete Franchise Package</h2>
+            <p className="text-gray-500 text-lg max-w-2xl mx-auto">We provide everything you need to succeed.</p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {[{ title: "Machine & Setup", icon: Wrench, items: ["5th-Gen Smart Juicer", "Professional Installation", "1 Year Warranty", "Complete Branding"], color: "from-orange-50 to-orange-100" }, { title: "Operations", icon: Truck, items: ["Monthly Fruit Supply", "QC Protocols", "Predictive Maintenance", "Spare Parts Support"], color: "from-green-50 to-green-100" }, { title: "Business Support", icon: Users, items: ["Location Assistance", "Staff Training", "Marketing Assets", "Account Manager"], color: "from-purple-50 to-purple-100" }].map((item, idx) => (
+              <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} whileHover={{ y: -8 }} className={`bg-gradient-to-br ${item.color} border border-gray-100 rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-xl transition-all`}>
+                <div className={`w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-4`}><item.icon size={28} className="text-gray-700" /></div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{item.title}</h3>
+                <ul className="space-y-3">
+                  {item.items.map((listItem, i) => (
+                    <li key={i} className="flex items-center gap-2 text-gray-600">
+                      <CheckCircle2 size={16} className="text-[#2ECC71]" /> {listItem}
                     </li>
                   ))}
                 </ul>
@@ -487,174 +312,86 @@ export default function App() {
         </div>
       </Section>
 
-
-
-      {/* --- 7. Franchise Benefits Section --- */}
-      <Section id="franchise" className="py-24 bg-[#F5F7F2]">
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Side: Information */}
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-4xl font-bold text-[#333333] mb-6">What's In It for the Franchise</h2>
-            <p className="text-gray-600 text-lg mb-10">Discover the benefits of partnering with Fruitlinq.</p>
-            
-            <div className="space-y-8">
-              {[
-                { title: "Turnkey Solution", desc: "Fruitlinq provides, installs, and operationalizes the vending machine with automated refills", icon: Wrench, color: "text-[#FF8C00]", bg: "bg-orange-50" },
-                { title: "Zero Staff Required", desc: "No barista training, no maintenance burden, automated cleaning performed", icon: Users, color: "text-[#2ECC71]", bg: "bg-green-50" },
-                { title: "Real-Time Insights", desc: "Live stats and reports with funds deposited seamlessly into your account", icon: Smartphone, color: "text-[#9D4EDD]", bg: "bg-purple-50" },
-                { title: "Maximum Uptime", desc: "99.2% uptime with remote monitoring, dedicated support, and advanced telemetry", icon: ShieldCheck, color: "text-orange-600", bg: "bg-red-50" }
-              ].map((item, idx) => (
-                <div key={idx} className="flex gap-4">
-                  <div className={`w-12 h-12 ${item.bg} rounded-full flex items-center justify-center shrink-0`}>
-                    <item.icon className={item.color} size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-xl text-[#333333]">{item.title}</h3>
-                    <p className="text-gray-600 mt-1">{item.desc}</p>
-                  </div>
+      {/* Franchise Benefits */}
+      <Section className="py-20 sm:py-32 bg-[#FFF7E6]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+            <div className="mb-6">
+              <span className="inline-block bg-[#FF8C00]/10 text-[#FF8C00] px-4 py-2 rounded-full text-sm font-bold tracking-wider uppercase mb-4">Own the Future</span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Start with one machine and scale to 50+</h2>
+              <p className="text-gray-600 text-lg">A high-margin, automated business model designed for passive income.</p>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">What's In It for the Franchise</h3>
+            <div className="space-y-4">
+              {[{ title: "Turnkey Solution", desc: "We provide, install, and operationalize", icon: Wrench, color: "text-orange-500" }, { title: "Zero Staff Required", desc: "No maintenance burden, automated cleaning", icon: Users, color: "text-green-500" }, { title: "Real-Time Insights", desc: "Live stats with funds deposited seamlessly", icon: Smartphone, color: "text-purple-500" }, { title: "Maximum Uptime", desc: "99.2% uptime with remote monitoring", icon: ShieldCheck, color: "text-red-500" }].map((item, idx) => (
+                <div key={idx} className="flex gap-4 p-4 bg-white rounded-2xl shadow-sm">
+                  <div className={`w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center shrink-0`}><item.icon size={24} className={item.color} /></div>
+                  <div><h4 className="font-bold text-gray-900">{item.title}</h4><p className="text-gray-500 text-sm">{item.desc}</p></div>
                 </div>
               ))}
             </div>
           </motion.div>
-
-          {/* Right Side: Image */}
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative h-[600px] rounded-3xl overflow-hidden shadow-2xl"
-          >
-            <img 
-              src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1000&auto=format&fit=crop" 
-              alt="Franchise Benefits" 
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+          <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
+            <img src="/Business Meeting v2.png" alt="Franchise Benefits" className="absolute inset-0 w-full h-full object-cover" />
           </motion.div>
         </div>
       </Section>
 
-      {/* --- 8. Contact Section --- */}
-      <Section id="contact" className="relative py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
+      {/* Contact */}
+      <Section className="py-20 sm:py-32 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <h2 className="text-4xl font-bold text-[#333333] mb-6">Get in Touch</h2>
-              <p className="text-gray-600 mb-10 text-lg">Have questions about franchising, partnerships, or just want to say hi?</p>
-              
-              <div className="space-y-8">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Get in Touch</h2>
+              <p className="text-gray-500 text-lg mb-8">Have questions about franchising or partnerships?</p>
+              <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center shrink-0">
-                    <Building2 className="text-[#2ECC71]" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg text-[#333333]">Head Office</h3>
-                    <p className="text-gray-600 mt-1">FRUITLINQ AGRO PRIVATE LIMITED</p>
-                  </div>
+                  <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center shrink-0"><Building2 size={24} className="text-[#FF8C00]" /></div>
+                  <div><h3 className="font-bold text-gray-900 mb-1">Head Office</h3><p className="text-gray-500">FRUITLINQ AGRO PRIVATE LIMITED</p></div>
                 </div>
-                
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center shrink-0">
-                    <Phone className="text-[#FF8C00]" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg text-[#333333]">Phone / WhatsApp</h3>
-                    <p className="text-gray-600 mt-1 text-lg font-medium">+91 93478 38756</p>
-                    <p className="text-sm text-gray-400">Mon-Sat, 9am - 7pm</p>
-                  </div>
+                  <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center shrink-0"><Phone size={24} className="text-[#2ECC71]" /></div>
+                  <div><h3 className="font-bold text-gray-900 mb-1">Phone / WhatsApp</h3><p className="text-gray-500 font-medium">+91 93478 38756</p></div>
                 </div>
-
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center shrink-0">
-                    <Mail className="text-[#4FC3F7]" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg text-[#333333]">Email</h3>
-                    <p className="text-gray-600 mt-1">hello@fruitlinq.in</p>
-                  </div>
+                  <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center shrink-0"><Mail size={24} className="text-blue-500" /></div>
+                  <div><h3 className="font-bold text-gray-900 mb-1">Email</h3><p className="text-gray-500">hello@fruitlinq.in</p></div>
                 </div>
-              </div>
-
-              <div className="mt-12 p-6 bg-gray-50 rounded-2xl border border-gray-100">
-                <h3 className="font-bold text-lg mb-2 text-[#333333]">Quick Support</h3>
-                <p className="text-gray-600 mb-4">Need immediate assistance with a vending machine?</p>
-                <Button variant="secondary" className="flex items-center gap-2 w-full justify-center">
-                  <MessageCircle size={20} />
-                  Chat on WhatsApp
-                </Button>
               </div>
             </div>
-
-            <div className="bg-[#FFF7E6] p-8 md:p-10 rounded-3xl border border-orange-100">
-              <h3 className="font-bold text-2xl mb-6 text-[#333333]">Send us a Message</h3>
-              <form className="space-y-5">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                  <input type="text" className="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" placeholder="Your Name" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                  <input type="tel" className="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" placeholder="10-digit mobile number" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
-                  <input type="text" className="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" placeholder="Where do you want to start?" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">I am interested in</label>
-                  <select className="w-full px-4 py-3 rounded-lg bg-white border border-gray-200 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all">
-                    <option>Franchise Opportunity</option>
-                    <option>Location Partnership</option>
-                    <option>Customer Support</option>
-                  </select>
-                </div>
-                <button type="button" className="w-full bg-gradient-to-r from-[#FF8C00] to-orange-600 text-white font-bold py-4 rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all shadow-lg transform hover:-translate-y-1">
-                  Request Call Back
-                </button>
+            <div className="bg-[#FFF7E6] border border-orange-100 rounded-3xl p-6 sm:p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
+              <form className="space-y-4">
+                <div><input type="text" placeholder="Your Name" className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" /></div>
+                <div><input type="tel" placeholder="10-digit mobile number" className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" /></div>
+                <div><input type="text" placeholder="Where do you want to start?" className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all" /></div>
+                <div><select className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 focus:border-[#FF8C00] focus:ring-2 focus:ring-orange-100 outline-none transition-all"><option className="text-black">Franchise Opportunity</option><option className="text-black">Location Partnership</option><option className="text-black">Customer Support</option></select></div>
+                <button type="button" className="w-full bg-gradient-to-r from-[#FF8C00] to-[#FF6B00] text-white font-bold py-4 rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all shadow-lg">Request Call Back</button>
               </form>
             </div>
           </div>
         </div>
       </Section>
 
-      {/* --- 9. Footer --- */}
-      <footer className="bg-[#333333] text-white py-16">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
-          <div className="col-span-1 md:col-span-2">
-            <img 
-              src="/logo1.png" 
-              alt="Fruitlinq Logo" 
-              className="h-[600px] w-auto mb-14"
-            />
-            <p className="text-gray-400 max-w-sm">
-              India's first farm-controlled orange juice vending franchise. Freshly squeezed in 55 seconds.
-            </p>
-          </div>
-          
-          
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            <div className="md:col-span-2">
+              <img src="/logo1.png" alt="Fruitlinq Logo" className="h-20 sm:h-24 md:h-28 w-auto mb-6" />
 
-          <div>
-            <h4 className="font-bold text-lg mb-6">Connect</h4>
-            <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#FF8C00] transition-colors">
-                <Instagram size={20} />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#FF8C00] transition-colors">
-                <Facebook size={20} />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#FF8C00] transition-colors">
-                <Linkedin size={20} />
-              </a>
+              <p className="text-gray-400 max-w-sm">India's first farm-controlled orange juice vending franchise. Freshly squeezed in 55 seconds.</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-lg mb-4">Connect</h4>
+              <div className="flex gap-3">
+                <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#FF8C00] transition-colors"><Instagram size={20} /></a>
+                <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#FF8C00] transition-colors"><Facebook size={20} /></a>
+                <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#FF8C00] transition-colors"><Linkedin size={20} /></a>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-white/10 text-center text-gray-500 text-sm">
-          © {new Date().getFullYear()} Fruitlinq Agro Private Limited. All rights reserved.
+          <div className="pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">© {new Date().getFullYear()} Fruitlinq Agro Private Limited. All rights reserved.</div>
         </div>
       </footer>
     </div>

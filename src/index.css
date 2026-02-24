@@ -1,1 +1,54 @@
 @import "tailwindcss";
+
+/* Auto-sliding images animation for Fresh Fruits E-Commerce section */
+@keyframes image-slider {
+  0% {
+    transform: translateX(0);
+  }
+  33.333% {
+    transform: translateX(0);
+  }
+  38.333% {
+    transform: translateX(-100%);
+  }
+  66.666% {
+    transform: translateX(-100%);
+  }
+  71.666% {
+    transform: translateX(-200%);
+  }
+  100% {
+    transform: translateX(-200%);
+  }
+}
+
+.animate-image-slider {
+  animation: image-slider 9s infinite;
+}
+
+/* Scrolling icons animation */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 25s linear infinite;
+}
+
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-scroll-right {
+  animation: scroll-right 25s linear infinite;
+}
