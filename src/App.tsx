@@ -171,29 +171,8 @@ As a South African company, we eliminate wholesale dependency to deliver uncompr
         </div>
       </Section>
 
-      {/* Corporate Backing */}
-      <Section className="py-16 sm:py-24 bg-[#FFF7E6]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-white rounded-3xl p-8 sm:p-12 shadow-xl">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div className="flex items-center gap-6">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-[#FF8C00] to-[#FF6B00] rounded-2xl flex items-center justify-center shadow-lg shadow-orange-200">
-                  <Building2 size={36} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Corporate Backing</h3>
-                  <p className="text-gray-500 text-sm sm:text-base">Wholly owned subsidiary</p>
-                </div>
-              </div>
-              <div>
-                <p className="text-gray-600 text-base sm:text-lg leading-relaxed">Fruitlinq operates as a wholly owned subsidiary of <span className="text-[#FF8C00] font-semibold">Hortgro Fresh Private Limited</span>, a globally established fresh produce company with operations across multiple countries.</p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </Section>
-
       {/* Fresh Fruits E-Commerce */}
+
       <Section className="py-20 sm:py-32 bg-[#FFF7E6] relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
