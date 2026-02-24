@@ -96,11 +96,12 @@ export default function App() {
         </div>
         <motion.div style={{ y: heroY }} className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center">
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }} className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 sm:mb-6 leading-tight text-white">
-            Farm to Cup in <br />
+           After Farm to Cup in<br />
             <span className="text-[#FF8C00]">55 Seconds</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="text-base sm:text-lg md:text-xl text-gray-200 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed">
-            Premium export-grade oranges sourced directly from our own orchards in South Africa & Egypt. No wholesale dependency. No compromise on quality.
+            Premium export-grade oranges sourced directly from South Africa and Egypt, with full control across our supply chain.
+As a South African company, we eliminate wholesale dependency to deliver uncompromising quality that meets the highest international standards.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 sm:mb-12">
             {[{ icon: Droplets, label: "No Ice" }, { icon: ShieldCheck, label: "No Water" }, { icon: Zap, label: "No Sugar" }].map((item, idx) => (
@@ -143,9 +144,9 @@ export default function App() {
                 <div className="w-12 h-1 bg-[#FF8C00]" />
                 <span className="text-[#2ECC71] font-bold uppercase tracking-widest text-sm">Our Story</span>
               </motion.div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900">India's Premier Fresh Grocery & <span className="text-[#FF8C00]">Food Technology</span> Company</h2>
-              <p className="text-gray-600 text-base sm:text-lg leading-relaxed mb-6">Fruitlinq is a fresh grocery and food technology company specializing in fresh fruit sourcing, online fruit delivery, and freshly squeezed orange juice vending machines. Built on decades of experience in global fruit supply chains, we combine quality, technology, and convenience to deliver reliable fresh food experiences.</p>
-              <p className="text-gray-600 text-base sm:text-lg leading-relaxed">By owning export operations and partnering directly with orchards in South Africa and Egypt, we ensure that every orange squeezed in our machines meets the highest global standards of sweetness and juice content.</p>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900">Premier Fresh Grocery & <span className="text-[#FF8C00]">Food Technology</span> Company</h2>
+              <p className="text-gray-600 text-base sm:text-lg leading-relaxed mb-6">Fruitful Global is a leading exporter and dedicated supplier of premium-quality fresh fruits, committed to excellence at every stage of the supply chain. With over two decades of industry expertise, we combine deep market knowledge, strategic sourcing, and a strong global network to ensure consistent, year-round availability of superior produce from renowned growing regions worldwide.</p>
+              <p className="text-gray-600 text-base sm:text-lg leading-relaxed">Our service is distinctly customer-focused, defined by 24/7 responsiveness, reliability, and tailored solutions to meet dynamic market demands. In addition to our export operations, we offer state-of-the-art freshly squeezed juice vending machines, delivering innovation, convenience, and farm-fresh quality directly to consumers.</p>
             </motion.div>
           </div>
         </div>
@@ -193,7 +194,7 @@ export default function App() {
               </div>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-6">
-              {[{ icon: Leaf, title: "Direct Farm Sourcing", desc: "We partner directly with trusted farmers and own orchards in South Africa & Egypt.", detail: "By eliminating middlemen, we ensure farmers get fair prices while customers receive the freshest produce within 24-48 hours of harvest.", color: "bg-green-50" }, { icon: ShoppingBag, title: "Professional Grade Packaging", desc: "Expert packaging with temperature-controlled materials ensures perfect condition.", detail: "Each fruit is individually inspected, cleaned, and packed in eco-friendly materials that maintain optimal freshness during transit.", color: "bg-orange-50" }, { icon: Truck, title: "Fast & Efficient", desc: "straight from farm to your hand.", detail: "Our cold chain logistics network ensures fruits arrive at peak ripeness, retaining maximum nutrition and flavor.", color: "bg-blue-50" }].map((item, idx) => (
+              {[{ icon: Leaf, title: "Direct Farm Sourcing", desc: "We establish direct partnerships with trusted growers in South Africa and Egypt, ensuring full traceability, consistent supply, and uncompromising quality from farm to market.", detail: "By eliminating middlemen, we ensure farmers get fair prices while customers receive the freshest produce within 24-48 hours of harvest.", color: "bg-green-50" }, { icon: ShoppingBag, title: "Professional Grade Packaging", desc: "Expert packaging with temperature-controlled materials ensures perfect condition.", detail: "Each fruit is individually inspected, cleaned, and packed in eco-friendly materials that maintain optimal freshness during transit.", color: "bg-orange-50" }, { icon: Truck, title: "Fast & Efficient", desc: "straight from farm to your hand.", detail: "Our cold chain logistics network ensures fruits arrive at peak ripeness, retaining maximum nutrition and flavor.", color: "bg-blue-50" }].map((item, idx) => (
                 <motion.div key={idx} initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.2 }} className={`flex gap-4 p-5 ${item.color} rounded-2xl shadow-sm`}>
                   <div className="w-14 h-14 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0"><item.icon size={28} className="text-gray-700" /></div>
                   <div className="flex-1">
@@ -215,7 +216,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-900">Meet the <span className="text-[#FF8C00]">5th Gen</span> Smart Juicer</h2>
-            <p className="text-gray-500 text-lg max-w-2xl mx-auto">Precision engineering meets nature's bounty. The most advanced automated juicing technology in India.</p>
+            <p className="text-gray-500 text-lg max-w-2xl mx-auto">Precision engineering meets nature's bounty. The most advanced automated juicing technology in SOUTH AFRICA.</p>
           </motion.div>
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="relative">
@@ -223,7 +224,7 @@ export default function App() {
               <div className="relative"><img src="juicer.jpeg" alt="5th Gen Smart Juicer" className="w-full rounded-3xl shadow-2xl" /></div>
             </motion.div>
             <div className="grid grid-cols-2 gap-4 sm:gap-6">
-              {[{ icon: Droplets, title: "Cold Chain", desc: "Temp controlled", color: "bg-blue-50" }, { icon: Smartphone, title: "UPI Enabled", desc: "Scan & Pay", color: "bg-purple-50" }, { icon: Zap, title: "Automatic", desc: "Touchless", color: "bg-green-50" }, { icon: Leaf, title: "100% Fresh", desc: "No additives", color: "bg-orange-50" }, { icon: ShieldCheck, title: "IoT Enabled", desc: "Remote monitor", color: "bg-cyan-50" }, { icon: Clock, title: "55 Seconds", desc: "Fast service", color: "bg-red-50" }].map((feature, idx) => (
+              {[{ icon: Droplets, title: "Cold Chain", desc: "Temp controlled", color: "bg-blue-50" }, { icon: Smartphone, title: "Payments", desc: "QR, Apple pay, Card payments", color: "bg-purple-50" }, { icon: Zap, title: "Automatic", desc: "Touchless", color: "bg-green-50" }, { icon: Leaf, title: "100% Fresh", desc: "No additives", color: "bg-orange-50" }, { icon: ShieldCheck, title: "IoT Enabled", desc: "Remote monitor", color: "bg-cyan-50" }, { icon: Clock, title: "55 Seconds", desc: "Fast service", color: "bg-red-50" }].map((feature, idx) => (
                 <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} whileHover={{ y: -5 }} className={`${feature.color} border border-gray-100 rounded-2xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-all`}>
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white shadow-sm flex items-center justify-center mb-3"><feature.icon size={20} className="text-gray-700" /></div>
                   <h3 className="font-bold text-gray-900 mb-1">{feature.title}</h3>
@@ -261,12 +262,12 @@ export default function App() {
       <Section className="py-20 sm:py-32 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-900">Why Partner with <span className="text-[#FF8C00]">Fruitlinq?</span></h2>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-900">Why Partner with <span className="text-[#FF8C00]">Fruitful?</span></h2>
             <p className="text-gray-500 text-lg max-w-2xl mx-auto">The numbers speak for themselves.</p>
           </motion.div>
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="grid grid-cols-2 gap-6">
-              {[{ icon: Building2, label: "25+ yrs", sub: "Strong Background", desc: "Decades of expertise in global fruit supply chains and export operations", color: "bg-blue-50", iconColor: "text-blue-500" }, { icon: CheckCircle2, label: "High", sub: "Gross Margins", desc: "Premium pricing with direct farm sourcing eliminates middlemen costs", color: "bg-green-50", iconColor: "text-green-500" }, { icon: ShoppingBag, label: "Stable", sub: "Supply Cost", desc: "Own orchards in South Africa & Egypt ensure consistent fruit pricing year-round", color: "bg-orange-50", iconColor: "text-orange-500" }, { icon: Clock, label: "24/7", sub: "Automated Sales", desc: "Smart vending machines generate revenue round-the-clock without staff", color: "bg-purple-50", iconColor: "text-purple-500" }].map((item, idx) => (
+              {[{ icon: Building2, label: "25+ yrs", sub: "Strong Background", desc: "Decades of expertise in global fruit supply chains and export operations", color: "bg-blue-50", iconColor: "text-blue-500" }, { icon: CheckCircle2, label: "High", sub: "Gross Margins", desc: "Premium pricing with direct farm sourcing eliminates middlemen costs", color: "bg-green-50", iconColor: "text-green-500" }, { icon: ShoppingBag, label: "Stable", sub: "Supply Cost", desc: "Orchards in South Africa & Egypt ensure consistent fruit pricing year-round", color: "bg-orange-50", iconColor: "text-orange-500" }, { icon: Clock, label: "24/7", sub: "Automated Sales", desc: "Smart vending machines generate revenue round-the-clock without staff", color: "bg-purple-50", iconColor: "text-purple-500" }].map((item, idx) => (
                 <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} whileHover={{ scale: 1.05, shadow: "xl" }} className={`${item.color} border border-gray-100 rounded-2xl p-6 sm:p-8 text-center shadow-sm hover:shadow-md transition-all`}>
                   <div className={`w-14 h-14 mx-auto mb-4 rounded-xl bg-white shadow-sm flex items-center justify-center ${item.iconColor}`}><item.icon size={28} /></div>
                   <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{item.label}</div>
@@ -348,18 +349,29 @@ export default function App() {
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center shrink-0"><Building2 size={24} className="text-[#FF8C00]" /></div>
-                  <div><h3 className="font-bold text-gray-900 mb-1">Head Office</h3><p className="text-gray-500">FRUITLINQ AGRO PRIVATE LIMITED</p></div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Head Office</h3>
+                    <p className="text-gray-900 font-semibold">FRUITFUL GLOBAL (PTY) LTD</p>
+                    <p className="text-gray-500 text-sm mt-1">2nd Floor, New Link Centre, 1 New Street, Paarl, Western Cape 7646. South Africa.</p>
+                  </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center shrink-0"><Phone size={24} className="text-[#2ECC71]" /></div>
-                  <div><h3 className="font-bold text-gray-900 mb-1">Phone / WhatsApp</h3><p className="text-gray-500 font-medium">+91 93478 38756</p></div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Phone / WhatsApp</h3>
+                    <p className="text-gray-500 font-medium">+27 71 883 3045, +27 72 902 6632</p>
+                  </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center shrink-0"><Mail size={24} className="text-blue-500" /></div>
-                  <div><h3 className="font-bold text-gray-900 mb-1">Email</h3><p className="text-gray-500">hello@fruitlinq.in</p></div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Email</h3>
+                    <p className="text-gray-500">sales@fruitfulglobal.com</p>
+                  </div>
                 </div>
               </div>
             </div>
+
             <div className="bg-[#FFF7E6] border border-orange-100 rounded-3xl p-6 sm:p-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
               <form className="space-y-4">
