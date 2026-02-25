@@ -19,7 +19,9 @@ import {
   Wrench,
   Truck,
   Users,
-  Play
+  Play,
+  Snowflake,
+  Waves
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 
@@ -123,8 +125,8 @@ export default function App() {
             Premium export-grade oranges sourced directly from South Africa and Egypt, with full control across our supply chain.
 As a South African company, we eliminate wholesale dependency to deliver uncompromising quality that meets the highest international standards.
           </motion.p>
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 sm:mb-12">
-            {[{ icon: Droplets, label: "No Ice" }, { icon: ShieldCheck, label: "No Water" }, { icon: Zap, label: "No Sugar" }].map((item, idx) => (
+<motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 sm:mb-12">
+            {[{ icon: Snowflake, label: "No Ice" }, { icon: Waves, label: "No Water" }, { icon: Leaf, label: "No Sugar" }].map((item, idx) => (
               <div key={idx} className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full">
                 <item.icon size={16} className="text-white" />
                 <span className="font-medium text-white text-xs sm:text-sm">{item.label}</span>
@@ -243,7 +245,7 @@ As a South African company, we eliminate wholesale dependency to deliver uncompr
 
             <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative">
               <div className="relative rounded-3xl overflow-hidden aspect-[4/3] lg:aspect-square shadow-2xl">
-                <img src="/Campus Scene v3.png" alt="Fruitlinq Business" className="w-full h-full object-cover" />
+                <img src="/fruitful last img.jpeg" alt="Fruitlinq Business" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
               </div>
             </motion.div>
@@ -298,7 +300,7 @@ As a South African company, we eliminate wholesale dependency to deliver uncompr
             </div>
           </motion.div>
           <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
-            <img src="/Business Meeting v2.png" alt="Franchise Benefits" className="absolute inset-0 w-full h-full object-cover" />
+            <img src="/fruitful img2.jpeg" alt="Franchise Benefits" className="absolute inset-0 w-full h-full object-cover" />
           </motion.div>
         </div>
       </Section>
