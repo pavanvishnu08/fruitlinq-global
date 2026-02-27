@@ -72,11 +72,12 @@ export default function App() {
 
   return (
     <div className="font-sans text-[#1a1a1a] bg-white overflow-x-hidden">
-      <style>{`
+<style>{`
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f5f5f5; }
         ::-webkit-scrollbar-thumb { background: #FF8C00; border-radius: 4px; }
         html { scroll-behavior: smooth; }
+        .text-justify { text-align: justify; }
       `}</style>
 
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FF8C00] to-[#2ECC71] z-[100]" style={{ scaleX: scrollYProgress, transformOrigin: "0%" }} />
@@ -108,7 +109,7 @@ export default function App() {
       {/* Hero Section */}
       <Section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-<img src="/Gemini_Generated_Image_4z37hg4z37hg4z37.png" alt="Fresh Oranges" className="w-full h-full object-cover" />
+<img src="/banner website.jpg.jpeg" alt="Fresh Oranges" className="w-full h-full object-cover" />
 
 
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#FF8C00]/30" />
@@ -118,7 +119,7 @@ export default function App() {
         </div>
         <motion.div style={{ y: heroY }} className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center">
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }} className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 sm:mb-6 leading-tight text-white">
-           After Farm to Cup in<br />
+            Farm to Cup in<br />
             <span className="text-[#FF8C00]">55 Seconds</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="text-base sm:text-lg md:text-xl text-gray-200 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed">
@@ -167,9 +168,10 @@ As a South African company, we eliminate wholesale dependency to deliver uncompr
                 <div className="w-12 h-1 bg-[#FF8C00]" />
                 <span className="text-[#2ECC71] font-bold uppercase tracking-widest text-sm">Our Story</span>
               </motion.div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900">Premier Fresh Grocery & <span className="text-[#FF8C00]">Food Technology</span> Company</h2>
-              <p className="text-gray-600 text-base sm:text-lg leading-relaxed mb-6">Fruitful Global is a leading exporter and dedicated supplier of premium-quality fresh fruits, committed to excellence at every stage of the supply chain. With over two decades of industry expertise, we combine deep market knowledge, strategic sourcing, and a strong global network to ensure consistent, year-round availability of superior produce from renowned growing regions worldwide.</p>
-              <p className="text-gray-600 text-base sm:text-lg leading-relaxed">Our service is distinctly customer-focused, defined by 24/7 responsiveness, reliability, and tailored solutions to meet dynamic market demands. In addition to our export operations, we offer state-of-the-art freshly squeezed juice vending machines, delivering innovation, convenience, and farm-fresh quality directly to consumers.</p>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900">Global Exporters of  <span className="text-[#FF8C00]">Premium</span> Fresh Fruits</h2>
+              <p className="text-gray-600 text-base sm:text-lg leading-relaxed mb-6 text-justify">Fruitful Global is a leading exporter and dedicated supplier of premium-quality fresh fruits, committed to excellence at every stage of the supply chain. With over two decades of industry expertise, we combine deep market knowledge, strategic sourcing, and a strong global network to ensure consistent, year-round availability of superior produce from renowned growing regions worldwide.</p>
+              <p className="text-gray-600 text-base sm:text-lg leading-relaxed text-justify">Our service is distinctly customer-focused, defined by 24/7 responsiveness, reliability, and tailored solutions to meet dynamic market demands. In addition to our export operations, we offer state-of-the-art freshly squeezed juice vending machines, delivering innovation, convenience, and farm-fresh quality directly to consumers.</p>
+
             </motion.div>
           </div>
         </div>
@@ -245,7 +247,7 @@ As a South African company, we eliminate wholesale dependency to deliver uncompr
 
             <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative">
               <div className="relative rounded-3xl overflow-hidden aspect-[4/3] lg:aspect-square shadow-2xl">
-                <img src="/fruitful last img.jpeg" alt="Fruitlinq Business" className="w-full h-full object-cover" />
+                <img src="/airport img.jpeg" alt="Fruitlinq Business" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
               </div>
             </motion.div>
@@ -300,7 +302,7 @@ As a South African company, we eliminate wholesale dependency to deliver uncompr
             </div>
           </motion.div>
           <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
-            <img src="/fruitful img2.jpeg" alt="Franchise Benefits" className="absolute inset-0 w-full h-full object-cover" />
+            <img src="/Business Meeting last.png" alt="Franchise Benefits" className="absolute inset-0 w-full h-full object-cover" />
           </motion.div>
         </div>
       </Section>
