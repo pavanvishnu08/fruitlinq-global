@@ -373,7 +373,8 @@ As a South African company, we eliminate wholesale dependency to deliver uncompr
               </div>
             </div>
           </div>
-          <div className="pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">© 2026 Fruitlinq Agro Private Limited. All rights reserved. developed by <a href="https://exelusinfotech.com/" target="_blank" rel="noopener noreferrer" className="text-[#FF8C00] hover:underline">Exelus Infotech Private Limited</a></div>
+          <div className="pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">© 2026 Fruitlinq Agro Private Limited. All rights reserved.</div>
+
 
         </div>
       </footer>
